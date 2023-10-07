@@ -1,0 +1,24 @@
+{
+    "mappings": [
+        {
+            "source-path": "sample-ear\\src\\main\\application\\",
+            "deploy-path": "\\"
+        },
+        {
+            "source-path": "sample-ear\\target\\sample-ear-1.0-SNAPSHOT\\",
+            "deploy-path": "\\"
+        },
+        {
+            "source-path": "sample-ejb\\target\\classes\\",
+            "deploy-path": "\\sample-ejb-1.0-SNAPSHOT.jar"
+        },        
+        {
+            "source-path": "sample-web\\target\\classes\\",
+            "deploy-path": "\\sample-web-1.0-SNAPSHOT.war\\WEB-INF\\classes"
+        },
+        {
+            "source-path": "sample-web\\src\\main\\webapp\\",
+            "deploy-path": "\\sample-web-1.0-SNAPSHOT.war"
+        }
+    ]
+}

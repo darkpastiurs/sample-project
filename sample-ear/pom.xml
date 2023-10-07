@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>sv.com.sample</groupId>
+    <artifactId>sample-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>sample-ear</artifactId>
+  <packaging>ear</packaging>
+
+  <dependencies>
+    <!-- Modulos -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sample-web</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sample-ejb</artifactId>
+      <type>ejb</type>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.primefaces.extensions</groupId>
+      <artifactId>primefaces-extensions</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>primeflex</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <version>${maven.ear.plugin.version}</version>
+        <configuration>
+          <version>8</version>
+          <defaultLibBundleDir>lib</defaultLibBundleDir>
+          <modules>
+            <webModule>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>sample-web</artifactId>
+              <contextRoot>/sample</contextRoot>
+            </webModule>
+          </modules>
+          <unpackTypes>war,ejb</unpackTypes>
+          <outputFileNameMapping>
+            @{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>
+                ${project.build.directory}/${project.artifactId}-${project.version}/lib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <excludeScope>provided</excludeScope>
+              <excludeArtifactIds>sample-ejb,sample-web</excludeArtifactIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
